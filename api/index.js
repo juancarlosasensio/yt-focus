@@ -34,6 +34,11 @@ app.get('/api/skills', (req, res) => {
 		processErrorResponse(res, 500, errMessage);
 	}			
 })
+
+app.get('/api/printSecret', (req, res) => {
+  console.log('Processing [GET] request to route /api/printSecret')
+  res.send({secret: process.env.ONE_SECRET})
+})
 	
 	
 app.get('/api/primarySkill/:skillName', (req, res) => {
