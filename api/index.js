@@ -1,4 +1,8 @@
-require('dotenv').config({ path: '../.env' })
+// https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: '../.env' })
+}
 const app = require('express')()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
@@ -35,8 +39,9 @@ app.get('/api/skills', (req, res) => {
 	}			
 })
 
-app.get('/api/printSecret', (req, res) => {
-  console.log('Processing [GET] request to route /api/printSecret')
+app.get('/api/testSetup', (req, res) => {
+  console.log('Processing [GET] request to route /api/printSecret');
+  
   res.send({secret: process.env.ONE_SECRET})
 })
 	
