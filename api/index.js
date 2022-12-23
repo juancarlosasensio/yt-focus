@@ -1,8 +1,8 @@
 // https://www.twilio.com/blog/working-with-environment-variables-in-node-js-html
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: '../.env' })
 }
+const fetch = require('node-fetch');
 // const cors = require('cors')
 const app = require('express')()
 const bodyParser = require('body-parser')
@@ -43,10 +43,14 @@ app.get('/api/testSetup', (req, res) => {
   }
 });
 
-app.get('/api/hackerNewsTest', (req, res) => {
+app.get('/api/hackerNewsTest', async (req, res) => {
   try { 
     const BASE_URL = `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent("elon musk")}`;
-    console.log(BASE_URL);
+    
+    const response = await fetch(BASE_URL);
+    const data = await response.json().hits
+
+    console.log(data);
 
     res.send({ secret: 'tobi' });
 
