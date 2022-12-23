@@ -43,14 +43,15 @@ app.get('/api/testSetup', (req, res) => {
   }
 });
 
-app.get('/api/hackerNewsTest', async (req, res) => {
+app.get('/api/hackerNewsTest/:query', async (req, res) => {
+  const { query } = req.params
   console.log("You've hit /api/hackerNewsTest")
   try { 
-    const BASE_URL = 'https://hn.algolia.com/api/v1/search?query="elon musk"';
+    const BASE_URL = `https://hn.algolia.com/api/v1/search?query=${query}`;
     const response = await fetch(BASE_URL, {
       host: 'hn.algolia.com',
       port: process.env.PORT || 8081,
-      path: '/api/v1/search?query="elon musk"'
+      path: `/api/v1/search?query=${query}`
     });
     const data = await response.json();
     res.status(200).json(data);

@@ -107,19 +107,19 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const App = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("elon musk");
   const { status, error } = {status: 'fetched', error: false}
   const [data, setData] = useState({hits: "holy"});
 
   useEffect(() => {
     const fetchHackerNews = async () => {
-      const res = await fetch('api/hackerNewsTest');
+      const res = await fetch(`api/hackerNewsTest/${query}`);
       const hackerNewsData = await res.json();
       setData(hackerNewsData)
     }
 
     fetchHackerNews();
-  }, [])
+  }, [query])
 
   const handleSubmit = e => {
     e.preventDefault();
