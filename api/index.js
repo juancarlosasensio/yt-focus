@@ -3,14 +3,32 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config({ path: '../.env' })
 }
+// const cors = require('cors')
 const app = require('express')()
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 
-const https = require('https');
-const http = require('http');
-var skillsData = require('./skillsData.js')
-var termsData = require('./termsSelectData.js')
+
+// https://stackoverflow.com/questions/60084428/failed-to-fetch-data-from-localhost
+// https://create-react-app.dev/docs/proxying-api-requests-in-development/
+
+// Need to figure out a way to properly configure dev host for the api so that React can call it from the client
+// const allowedOrigins = ["http://localhost:3000", "http://localhost:8081"];
+
+// app.use(
+//     cors({
+//         origin: function(origin, callback) {
+//             if (!origin) return callback(null, true);
+//             if (allowedOrigins.indexOf(origin) === -1) {
+//                 var msg =
+//                     "The CORS policy for this site does not " +
+//                     "allow access from the specified Origin.";
+//                 return callback(new Error(msg), false);
+//             }
+//             return callback(null, true);
+//         }
+//     })
+// );
 
 app.set('port', (process.env.PORT || 8081));
 
@@ -43,10 +61,16 @@ app.get('/api/testSetup', (req, res) => {
   console.log(process.env.NODE_ENV)
 
   if (process.env.NODE_ENV !== 'production') {
-    res.send({secret: "shhh"})
+    res.send({secret: "From /api/testSetup baby"})
   } else {
     res.send({secret: "We're on prod baby!"})
   }
+})
+
+app.get('/api/hackerNewsTest', (req, res) => {
+  const BASE_URL = `https://hn.algolia.com/api/v1/search?query=${query}`;
+  console.log(BASE_URL)
+  res.json({ user: 'tobi' })
 })
 	
 	
