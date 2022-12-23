@@ -44,15 +44,16 @@ app.get('/api/testSetup', (req, res) => {
 });
 
 app.get('/api/hackerNewsTest', async (req, res) => {
+  console.log("You've hit /api/hackerNewsTest")
   try { 
-    const BASE_URL = `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent("elon musk")}`;
-    
-    const response = await fetch(BASE_URL);
-    const data = await response.json().hits
-
-    console.log(data);
-
-    res.send({ secret: 'tobi' });
+    const BASE_URL = 'https://hn.algolia.com/api/v1/search?query="elon musk"';
+    const response = await fetch(BASE_URL, {
+      host: 'hn.algolia.com',
+      port: process.env.PORT || 8081,
+      path: '/api/v1/search?query="elon musk"'
+    });
+    const data = await response.json();
+    res.status(200).json(data);
 
   } catch (err) {
     let errMessage = `${err}`;

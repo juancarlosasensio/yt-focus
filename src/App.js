@@ -109,15 +109,13 @@ import "./App.css";
 const App = () => {
   const [query, setQuery] = useState("");
   const { status, error } = {status: 'fetched', error: false}
-  const [data, setData] = useState({secret: "holy"});
+  const [data, setData] = useState({hits: "holy"});
 
   useEffect(() => {
-    const fetchHackerNews = async (searchStr = "") => {
-      const res = await fetch('api/testSetup');
-      console.log(res)
-      const laData = await res.json();
-      setData(laData)
-      console.log(laData)
+    const fetchHackerNews = async () => {
+      const res = await fetch('api/hackerNewsTest');
+      const hackerNewsData = await res.json();
+      setData(hackerNewsData)
     }
 
     fetchHackerNews();
@@ -126,14 +124,15 @@ const App = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const query = e.target.search.value;
-    if (query) {
-      setQuery(query);
+    const search = e.target.search.value;
+    if (search) {
+      setQuery(search);
       e.target.search.value = "";
     }
   };
 
-  // const articles = data.hits;
+  const articles = data?.hits;
+  const displayHNArticles = status === "fetched" && Array.isArray(articles);
 
   return (
     <div className="App">
@@ -153,8 +152,8 @@ const App = () => {
           <div> Let's get started by searching for an article! </div>
         )}
         {status === "error" && <div>{error}</div>}
-        {status === "fetching" && <div className="loading" />}
-        {/* {status === "fetched" && (
+        {status === "feetched" && <div className="loading" />}
+        {displayHNArticles && (
           <>
             <div className="query"> Search results for {query} </div>
             {articles.length === 0 && <div> No articles found! :( </div>}
@@ -167,9 +166,6 @@ const App = () => {
               </div>
             ))}
           </>
-        )} */}
-        {status === 'fetched' && (
-          <div>{data.secret}</div>
         )}
       </main>
     </div>
