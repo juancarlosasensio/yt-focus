@@ -70,7 +70,7 @@ app.get('/api/testSetup', (req, res) => {
 app.get('/api/hackerNewsTest', (req, res) => {
   const BASE_URL = `https://hn.algolia.com/api/v1/search?query=${query}`;
   console.log(BASE_URL)
-  res.json({ user: 'tobi' })
+  res.send({ secret: 'tobi' })
 })
 	
 	
