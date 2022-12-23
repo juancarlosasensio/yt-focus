@@ -57,7 +57,7 @@ app.get('/api/skills', (req, res) => {
 })
 
 app.get('/api/testSetup', (req, res) => {
-  console.log('Processing [GET] request to route /api/printSecret');
+  console.log('Processing [GET] request to route /api/testSetup');
   console.log(process.env.NODE_ENV)
 
   if (process.env.NODE_ENV !== 'production') {
@@ -69,7 +69,8 @@ app.get('/api/testSetup', (req, res) => {
 
 app.get('/api/hackerNewsTest', (req, res) => {
   const BASE_URL = `https://hn.algolia.com/api/v1/search?query=${query}`;
-  console.log(BASE_URL)
+  console.log(BASE_URL);
+
   res.send({ secret: 'tobi' })
 })
 	
