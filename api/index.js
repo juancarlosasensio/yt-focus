@@ -11,7 +11,6 @@ const https = require('https');
 const http = require('http');
 var skillsData = require('./skillsData.js')
 var termsData = require('./termsSelectData.js')
-// var termsData = require('./termsData.js')
 
 app.set('port', (process.env.PORT || 8081));
 
@@ -41,8 +40,13 @@ app.get('/api/skills', (req, res) => {
 
 app.get('/api/testSetup', (req, res) => {
   console.log('Processing [GET] request to route /api/printSecret');
-  
-  res.send({secret: process.env.ONE_SECRET})
+  console.log(process.env.NODE_ENV)
+
+  if (process.env.NODE_ENV !== 'production') {
+    res.send({secret: "shhh"})
+  } else {
+    res.send({secret: "We're on prod baby!"})
+  }
 })
 	
 	
