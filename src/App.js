@@ -1,30 +1,3 @@
-// import React, {useEffect} from 'react';
-// import './App.css';
-// //import Alert from 'react-bootstrap/Alert'
-// import Alert from '@mui/material/Alert'
-// import Spinner from 'react-bootstrap/Spinner'
-// import { PrimaryTerm } from './PrimaryTerm'
-
-
-// function reducer(state, action) {
-// 	//console.log(`reducer: action.type = ${action.type}`);
-//   switch (action.type) {
-//       case 'stateFromBackend':
-// 		let stFromBackend = Object.assign({}, action.allSkills);
-// 		//console.log(`reducer case STATE_FROM_BACKEND: stFromBackend = ${JSON.stringify(stFromBackend)}`);
-			
-// 		return stFromBackend;	  
-// 	  case 'toggleButton': 
-// 		let newPrimarySkill = Object.assign({}, state.primary_skills[action.index], {showCategories: !state.primary_skills[action.index].showCategories});		
-// 		let newPS = Object.assign([...state.primary_skills], {[action.index]: newPrimarySkill});
-         
-// 		let newState = Object.assign({}, {primary_skills: newPS, error: null} );	  
-// 		return newState;
-//     default:
-//       throw new Error();
-//   }
-// }
-
 // export function App() {
 	
 // 	const [errorState, setErrorState] = React.useState([]);	
@@ -100,8 +73,6 @@
 //     </div>
 //   );
 // }
-
-// export default App;
 
 import React, { useState, useEffect } from "react";
 import "./App.css";
