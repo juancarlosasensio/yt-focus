@@ -15,6 +15,7 @@ app.use(cors());
 // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 
+// https://github.com/LionC/express-basic-auth
 app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
 
 function myAuthorizer(username, password) {
