@@ -3,7 +3,7 @@ const processErrorResponse = require('../utils/processErrorResponse.js')
 
 const getArticlesByQuery = async (req, res) => {
   const { query } = req.params
-  console.log("You've hit /api/hackerNewsTest")
+  console.log("You've hit /api/hackerNewsTest with query: ", query)
   try { 
     const URL = `https://hn.algolia.com/api/v1/search?query=${query}`;
     const response = await fetch(URL, {

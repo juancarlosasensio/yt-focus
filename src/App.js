@@ -84,9 +84,16 @@ const App = () => {
   const [data, setData] = useState({hits: "holy"});
 
   useEffect(() => {
+    const headersList = {
+      'Authorization': `${process.env.REACT_APP_AUTH_HEADER}`, 
+      'Content-Type': 'application/json'
+    }
+    setError(false);
     const fetchHackerNews = async () => {
       try {
-        const res = await fetch(`api/hackerNewsTest/${query}`);
+        const res = await fetch(`api/hackerNewsTest/${query}`, {
+          headers: headersList
+        });
         const hackerNewsData = await res.json();
         setData(hackerNewsData) 
       } catch (error) {
