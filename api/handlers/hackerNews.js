@@ -13,7 +13,15 @@ const getArticlesByQuery = async (req, res) => {
       method : 'GET'
     });
     const data = await response.json();
-    res.status(200).json(data);
+    const articles = data.hits;
+    const filterEmptyURL = (article) => { 
+      return (article.url !== "" && article?.url?.length > 0 && article.url.includes('http') ) 
+    }
+    const sortByDate = (a, b) => { return new Date(b.created_at) - new Date(a.created_at) }
+    const filteredArticles = articles.filter(filterEmptyURL);
+    filteredArticles.sort(sortByDate)
+
+    res.status(200).json(filteredArticles);
 
   } catch (err) {
     let errMessage = `${err}`;
