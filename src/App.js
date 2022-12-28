@@ -114,7 +114,7 @@ const App = () => {
     }
   };
 
-  const articles = data?.hits;
+  const articles = data;
   const displayHNArticles = status === "fetched" && Array.isArray(articles) && !error;
 
   return (
