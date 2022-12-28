@@ -17,26 +17,9 @@ const getArticlesByQuery = async (req, res) => {
     const filterEmptyURL = (article) => { 
       return (article.url !== "" && article?.url?.length > 0 && article.url.includes('http') ) 
     }
-    const filteredArticles = articles.filter(filterEmptyURL)
-
-    // Article keys...
-//      [
-//   'created_at',   'title',
-//   'url',          'author',
-//   'points',       'story_text',
-//   'comment_text', 'num_comments',
-//   'story_id',     'story_title',
-//   'story_url',    'parent_id',
-//   'created_at_i', '_tags',
-//   'objectID',     '_highlightResult'
-// ]
-
-    const article = data.hits[0]
-    const articleKeys = Object.keys(article);
-    console.log('hello, data is of type', typeof data, Array.isArray(articles));
-    console.log(articleKeys, article)
-
-
+    const sortByDate = (a, b) => { return new Date(b.created_at) - new Date(a.created_at) }
+    const filteredArticles = articles.filter(filterEmptyURL);
+    filteredArticles.sort(sortByDate)
 
     res.status(200).json(filteredArticles);
 
