@@ -79,16 +79,21 @@ import "./App.css";
 
 const App = () => {
   const [query, setQuery] = useState("elon musk");
-  const { status, error } = {status: 'fetched', error: false}
+  const [error, setError] = useState("false")
+  const { status } = { status: 'fetched' }
   const [data, setData] = useState({hits: "holy"});
 
   useEffect(() => {
     const fetchHackerNews = async () => {
-      const res = await fetch(`api/hackerNewsTest/${query}`);
-      const hackerNewsData = await res.json();
-      setData(hackerNewsData)
+      try {
+        const res = await fetch(`api/hackerNewsTest/${query}`);
+        const hackerNewsData = await res.json();
+        setData(hackerNewsData) 
+      } catch (error) {
+        console.log(error)
+        setError(true)
+      }
     }
-
     fetchHackerNews();
   }, [query])
 
@@ -103,7 +108,7 @@ const App = () => {
   };
 
   const articles = data?.hits;
-  const displayHNArticles = status === "fetched" && Array.isArray(articles);
+  const displayHNArticles = status === "fetched" && Array.isArray(articles) && !error;
 
   return (
     <div className="App">

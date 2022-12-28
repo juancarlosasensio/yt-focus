@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const basicAuth = require('express-basic-auth')
 
 const app = express();
 // adding Helmet to enhance API's security
@@ -13,6 +14,15 @@ app.use(bodyParser.json());
 app.use(cors());
 // adding morgan to log HTTP requests
 app.use(morgan('combined'));
+
+app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
+
+function myAuthorizer(username, password) {
+    const userMatches = basicAuth.safeCompare(username, process.env.SECRET_ADMIN)
+    const passwordMatches = basicAuth.safeCompare(password, process.env.SECRET_PWD)
+
+    return userMatches & passwordMatches
+}
 
 const getArticlesByQuery = require('./handlers/hackerNews')
 
