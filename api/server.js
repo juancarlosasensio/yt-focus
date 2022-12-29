@@ -15,6 +15,10 @@ app.use(cors());
 // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 
+// How to server-side render the app in "/"
+// Look at express.static here:
+// https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/
+
 // https://github.com/LionC/express-basic-auth
 app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
 
