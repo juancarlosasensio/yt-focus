@@ -1,36 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHN } from "./hooks/useHN";
 import "./App.css";
 
 const App = () => {
-  const headersList = {
-    'Authorization': `${process.env.REACT_APP_AUTH_HEADER}`, 
-    'Content-Type': 'application/json'
-  }
+  // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#supplying_request_options
+  const requestOptions = {
+    headers: {
+      'Authorization': `${process.env.REACT_APP_AUTH_HEADER}`, 
+      'Content-Type': 'application/json'
+    }  
+  };
   const [query, setQuery] = useState("elon musk");
-  const { status, data, error } = useHN(query, { headers: headersList });
-  // const { status } = { status: 'fetched' }
-
-  // useEffect(() => {
-  //   const headersList = {
-  //     'Authorization': `${process.env.REACT_APP_AUTH_HEADER}`, 
-  //     'Content-Type': 'application/json'
-  //   }
-  //   setError(false);
-  //   const fetchHackerNews = async () => {
-  //     try {
-  //       const res = await fetch(`api/hackerNewsTest/${query}`, {
-  //         headers: headersList
-  //       });
-  //       const hackerNewsData = await res.json();
-  //       setData(hackerNewsData) 
-  //     } catch (error) {
-  //       console.log(error)
-  //       setError(true)
-  //     }
-  //   }
-  //   fetchHackerNews();
-  // }, [query])
+  // Avoids infinite loop cause by resetting requestOptions value on every re-render. We don't want fetchOptions to change.
+  const [fetchOptions, ] = useState(requestOptions);
+  const { status, data, error } = useHN(query, fetchOptions);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -43,7 +26,6 @@ const App = () => {
   };
 
   const articles = data;
-  const displayHNArticles = status === "fetched" && Array.isArray(articles) && !error;
 
   return (
     <div className="App">
@@ -63,9 +45,8 @@ const App = () => {
           <div> Let's get started by searching for an article! </div>
         )}
         {status === "error" && <div>{error}</div>}
-        {status === "fetched" && <div className="loading" />}
         {status === "fetching" && <div className="loading" />}
-        {displayHNArticles && (
+        {status === "fetched" && (
           <>
             <div className="query"> Search results for {query} </div>
             {articles.length === 0 && <div> No articles found! :( </div>}
