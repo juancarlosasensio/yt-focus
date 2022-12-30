@@ -22,7 +22,16 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 
 // Authorize all /api requests
 //https://github.com/LionC/express-basic-auth
-app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
+app.use("/api", basicAuth({
+  authorizer: myAuthorizer,
+  unauthorizedResponse: getUnauthorizedResponse 
+}))
+
+function getUnauthorizedResponse(req) {
+    return req.auth
+        ? ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected')
+        : 'No credentials provided'
+}
 
 function myAuthorizer(username, password) {
     const userMatches = basicAuth.safeCompare(username, process.env.SECRET_ADMIN)
