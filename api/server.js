@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -19,7 +20,10 @@ app.use(morgan('combined'));
 // Look at express.static here:
 // https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/
 
-// https://github.com/LionC/express-basic-auth
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, '../public')));
+
+//https://github.com/LionC/express-basic-auth
 app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
 
 function myAuthorizer(username, password) {
@@ -29,7 +33,22 @@ function myAuthorizer(username, password) {
     return userMatches & passwordMatches
 }
 
+// Handle GET requests to /api route
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
+});
+
 const getArticlesByQuery = require('./handlers/hackerNews')
+app.get('/api/hackerNewsTest/:query', getArticlesByQuery)
+
+// All other GET requests not handled before will return our React app
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
+});
+
+app.set('port', (process.env.PORT || 8081));
+
+module.exports = app;
 
 // https://stackoverflow.com/questions/60084428/failed-to-fetch-data-from-localhost
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/
@@ -51,8 +70,3 @@ const getArticlesByQuery = require('./handlers/hackerNews')
 //         }
 //     })
 // );
-
-app.set('port', (process.env.PORT || 8081));
-app.get('/api/hackerNewsTest/:query', getArticlesByQuery)
-
-module.exports = app
