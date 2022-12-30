@@ -24,14 +24,14 @@ app.use(morgan('combined'));
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 //https://github.com/LionC/express-basic-auth
-app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
+// app.use("/api", basicAuth( { authorizer: myAuthorizer } ))
 
-function myAuthorizer(username, password) {
-    const userMatches = basicAuth.safeCompare(username, process.env.SECRET_ADMIN)
-    const passwordMatches = basicAuth.safeCompare(password, process.env.SECRET_PWD)
+// function myAuthorizer(username, password) {
+//     const userMatches = basicAuth.safeCompare(username, process.env.SECRET_ADMIN)
+//     const passwordMatches = basicAuth.safeCompare(password, process.env.SECRET_PWD)
 
-    return userMatches & passwordMatches
-}
+//     return userMatches & passwordMatches
+// }
 
 // Handle GET requests to /api route
 app.get("/api", (req, res) => {
