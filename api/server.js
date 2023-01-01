@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const {protect} = require('./utils/auth');
+const { protect } = require('./utils/auth');
+const router = require('./router');
 
 const app = express();
 // adding Helmet to enhance API's security
@@ -21,10 +22,7 @@ app.use(morgan('combined'));
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 // Authorize all /api requests
-app.use("/api", protect())
-
-const getArticlesByQuery = require('./handlers/hackerNews')
-app.get('/api/hackerNewsTest/:query', getArticlesByQuery)
+app.use("/api", protect(), router);
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
