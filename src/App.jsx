@@ -10,7 +10,7 @@ const App = () => {
       'Content-Type': 'application/json'
     }  
   };
-  const [query, setQuery] = useState("elon musk");
+  const [query, setQuery] = useState("");
   // Avoids infinite loop cause by resetting requestOptions value on every re-render. We don't want fetchOptions to change.
   const [fetchOptions, ] = useState(requestOptions);
   const { status, data, error } = useHN(query, fetchOptions);

@@ -30,6 +30,7 @@ const getArticlesByQuery = async (req, res) => {
 }
 
 const getFrontPageArticles = async (req, res) => {
+  console.log("You've hit /api/hackerNewsTest with no 'query' param. You'll get front page results.")
   try { 
     const URL = `http://hn.algolia.com/api/v1/search?tags=front_page`;
     const response = await fetch(URL, {
@@ -39,7 +40,7 @@ const getFrontPageArticles = async (req, res) => {
       method : 'GET'
     });
     const data = await response.json();
-    res.status(200).json(data);
+    res.status(200).json(data.hits);
 
   } catch (err) {
     let errMessage = `${err}`;
