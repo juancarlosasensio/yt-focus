@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const basicAuth = require('express-basic-auth')
+const {protect} = require('./utils/auth');
 
 const app = express();
 // adding Helmet to enhance API's security
@@ -21,24 +21,8 @@ app.use(morgan('combined'));
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 // Authorize all /api requests
-//https://github.com/LionC/express-basic-auth
-app.use("/api", basicAuth({
-  authorizer: myAuthorizer,
-  unauthorizedResponse: getUnauthorizedResponse 
-}))
+app.use("/api", protect())
 
-function getUnauthorizedResponse(req) {
-    return req.auth
-        ? ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected')
-        : 'No credentials provided'
-}
-
-function myAuthorizer(username, password) {
-    const userMatches = basicAuth.safeCompare(username, process.env.SECRET_ADMIN)
-    const passwordMatches = basicAuth.safeCompare(password, process.env.SECRET_PWD)
-
-    return userMatches & passwordMatches
-}
 const getArticlesByQuery = require('./handlers/hackerNews')
 app.get('/api/hackerNewsTest/:query', getArticlesByQuery)
 
