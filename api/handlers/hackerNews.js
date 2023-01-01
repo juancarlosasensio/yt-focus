@@ -29,4 +29,25 @@ const getArticlesByQuery = async (req, res) => {
   }
 }
 
-module.exports = getArticlesByQuery;
+const getFrontPageArticles = async (req, res) => {
+  try { 
+    const URL = `http://hn.algolia.com/api/v1/search?tags=front_page`;
+    const response = await fetch(URL, {
+      host: 'hn.algolia.com',
+      port: process.env.PORT || 8081,
+      path: '/api/v1/search?tags=front_page',
+      method : 'GET'
+    });
+    const data = await response.json();
+    res.status(200).json(data);
+
+  } catch (err) {
+    let errMessage = `${err}`;
+    processErrorResponse(res, 500, errMessage); 
+  }
+}
+
+module.exports = {
+  getArticlesByQuery,
+  getFrontPageArticles
+};
