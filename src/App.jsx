@@ -25,8 +25,6 @@ const App = () => {
     }
   };
 
-  const articles = data;
-
   return (
     <div className="App">
       <header> Hackernews Search </header>
@@ -48,9 +46,9 @@ const App = () => {
         {status === "fetching" && <div className="loading" />}
         {status === "fetched" && (
           <>
-            <div className="query"> Search results for {query} </div>
-            {articles.length === 0 && <div> No articles found! :( </div>}
-            {articles.map(article => (
+            <div className="query"> {query ? `Search results for ${query}` : 'Front page results'} </div>
+            {data.length === 0 && <div> No articles found! :( </div>}
+            {data.map(article => (
               <div className="article" key={article.objectID}>
                 <a target="_blank" href={article.url} rel="noopener noreferrer">
                   {article.title}
