@@ -6,7 +6,7 @@ const {
 
 const router = Router();
 
-router.get('/hackerNewsTest', getFrontPageArticles)
-router.get('/hackerNewsTest/:query', getArticlesByQuery)
+router.get('/hn', getFrontPageArticles)
+router.get('/hn/:query', getArticlesByQuery)
 
 module.exports = router;
