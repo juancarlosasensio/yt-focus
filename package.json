@@ -2,7 +2,7 @@
   "name": "yt-focus-v1",
   "description": "Server rendered YouTube with less distractions.",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config webpack.config.js --mode production",
     "start": "node dist/server.js",
     "dev": "webpack && node dist/server.js"
   },

@@ -1,5 +1,5 @@
 {
   "buildCommand": "webpack",
   "outputDirectory": "dist",
-   "devCommand": "webpack && node dist/server.js"
+  "devCommand": "webpack && node dist/server.js"
 }
