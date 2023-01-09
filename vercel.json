@@ -1,3 +1,5 @@
 {
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
+  "buildCommand": "webpack",
+  "outputDirectory": "dist",
+   "devCommand": "webpack && node dist/server.js"
 }
